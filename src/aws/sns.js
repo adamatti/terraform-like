@@ -1,6 +1,7 @@
 'use strict';
 
 const config = require('../config');
+const logger = require('../logger');
 const SNS = require('aws-sdk/clients/sns');
 const snsOptions = {
   region: config.sqs.region,
@@ -21,14 +22,14 @@ const subscribe = async (topic, queue, args) => {
     },
     ReturnSubscriptionArn: true,
   }).promise();
-  console.log('Subscription created, arn:', response.SubscriptionArn);
+  logger.info(`Subscription created [arn: ${response.SubscriptionArn}, queue: ${queue.name}]`);
 };
 
 const deleteTopic = async (topicName) => {
   try {
     const TopicArn = `arn:aws:sns:us-east-1:000000000000:${topicName}`;
     await sns.deleteTopic({TopicArn}).promise();
-    console.log('Topic deleted:', topicName);
+    logger.warn(`Topic deleted [name: ${topicName}]`);
   } catch (error) {
     // ignore
   }
@@ -38,7 +39,7 @@ const createTopic = async (topicName, queue, args) => {
   args = args || {};
   await deleteTopic(topicName);
   const topic = await sns.createTopic({Name: topicName}).promise();
-  console.log('Topic created:', topicName, '- arn:', topic.TopicArn);
+  logger.info(`Topic created [name: ${topicName}, arn: ${topic.TopicArn}]`);
 
   if (queue) {
     const queues = Array.isArray(queue) ? queue : [queue];

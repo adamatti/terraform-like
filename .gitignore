@@ -2,3 +2,5 @@ node_modules/
 
 fox.js
 package-lock.json
+
+*.log

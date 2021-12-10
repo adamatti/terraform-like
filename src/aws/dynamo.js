@@ -1,6 +1,7 @@
 'use strict';
 
 const config = require('../config');
+const logger = require('../logger');
 const Dynamo = require('aws-sdk/clients/dynamodb');
 const dynamo = new Dynamo({
   region: config.dynamo.region,
@@ -40,7 +41,7 @@ const createTable = async (tableName, key, options) => {
 
   try {
     await dynamo.deleteTable({TableName: tableName}).promise();
-    console.log('Table deleted:', tableName);
+    logger.warn(`Table deleted [name: ${tableName}]`);
   } catch (error) {}
 
   try {
@@ -68,10 +69,10 @@ const createTable = async (tableName, key, options) => {
     }
 
     await dynamo.createTable(tableDefinition).promise();
-    console.log('Table created:', tableName);
+    logger.info(`Table created [name: ${tableName}]`);
   } catch (error) {
     if (error.code === 'ResourceInUseException') {
-      console.log('Table already exists:', tableName);
+      logger.warn('Table already exists:', tableName);
       return;
     }
     throw error;

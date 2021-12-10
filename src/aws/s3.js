@@ -1,6 +1,7 @@
 'use strict';
 
 const config = require('../config');
+const logger = require('../logger');
 const S3 = require('aws-sdk/clients/s3');
 const s3Options = {
   endpoint: config.s3.endpoint,
@@ -24,12 +25,12 @@ const subscribe = async (bucketName, queue) => {
       ],
     },
   }).promise();
-  console.log('S3 subscription created');
+  logger.info(`S3 subscription created [bucket: ${bucketName}, queue: ${queue.name}]`);
 };
 
 const createBucket = async (bucketName, queue) =>{
   await s3.createBucket({Bucket: bucketName}).promise();
-  console.log('Bucket created:', bucketName);
+  logger.info(`Bucket created [name: ${bucketName}]`);
 
   if (queue) {
     await subscribe(bucketName, queue);
@@ -42,7 +43,7 @@ const upload = async (bucketName, key, body) => {
     Key: key,
     Body: body,
   }).promise();
-  console.log(`Uploaded ${bucketName}/${key}`);
+  logger.info(`Uploaded ${bucketName}/${key}`);
 };
 
 module.exports = {

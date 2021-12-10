@@ -6,14 +6,17 @@ QUEUE_URL=http://localhost:4566/000000000000/new-queue
 help: ## show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-clean:
-	@rm -rf node_modules
+clean-soft:
 	@rm -f package-lock.json
+	@rm -f *.log
+
+clean: clean-soft
+	@rm -rf node_modules
 
 install:
 	@yarn
 
-run:
+run: clean-soft
 	yarn start
 
 lint:

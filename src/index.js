@@ -1,10 +1,11 @@
 'use strict';
 
+const logger = require('./logger');
 const {createBucket, createQueue, createTopic, createTable} = require('./aws');
 const foxSpecific = require('./fox');
 
 const main = async ()=>{
-  console.log('Started');
+  logger.info('Started');
   await createQueue('new-queue-dlq');
 
   const queueS3 = await createQueue('new-queue-s3');
@@ -20,6 +21,7 @@ const main = async ()=>{
 
   await createTable('new-table', 'id');
   await foxSpecific();
+  logger.info('Finished, shutting down');
 };
 
 main();

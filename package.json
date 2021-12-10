@@ -6,7 +6,8 @@
         "lint": "eslint 'src/**/*.js'"
     },
     "dependencies": {
-        "aws-sdk": "^2.866.0"
+        "aws-sdk": "^2.866.0",
+        "winston": "^3.3.3"
     },
     "devDependencies": {
         "eslint": "^8.4.1",

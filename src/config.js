@@ -1,6 +1,7 @@
 'use strict';
 
 const config = {
+  logLevel: process.env.LOG_LEVEL || 'debug',
   sqs: {
     region: process.env.AWS_SQS_REGION || process.env.AWS_REGION || 'us-east-1',
     endpoint: process.env.AWS_SQS_ENDPOINT,
