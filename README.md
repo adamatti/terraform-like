@@ -7,4 +7,5 @@ Because they are slow for local development (IMHO) and I don't care about state 
 # Next steps
 
 - improve logs
-- destroy (do I need it?)
+- lint?
+- destroy? (do I need it?)

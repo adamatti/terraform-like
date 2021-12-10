@@ -2,10 +2,14 @@
     "license": "UNLICENSED",
     "main": "src/index.js",
     "scripts": {
-        "start" : "node src/index.js"
+        "start": "node src/index.js",
+        "lint": "eslint 'src/**/*.js'"
     },
     "dependencies": {
-        "aws-sdk": "^2.866.0",
-        "lodash": "^4.17.21"
+        "aws-sdk": "^2.866.0"
+    },
+    "devDependencies": {
+        "eslint": "^8.4.1",
+        "eslint-config-google": "^0.14.0"
     }
 }
